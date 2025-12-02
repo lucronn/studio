@@ -1,4 +1,13 @@
-import { getSuccessfulPayloadsFromFirestore } from './firestore-service';
+import { getSuccessfulPayloadsFromFirestore, getSuccessfulPayloadsWithMetadata, type SuccessfulPayload } from './firestore-service';
+
+export async function getPayloadLibrary(): Promise<SuccessfulPayload[]> {
+  try {
+    return await getSuccessfulPayloadsWithMetadata();
+  } catch (error) {
+    console.error('Error getting payload library:', error);
+    return [];
+  }
+}
 
 /**
  * Retrieves successful payloads from the Firestore database.
