@@ -16,6 +16,8 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
+    - name: audit
+      run: npm audit fix
     - name: install
       run: npm install
     - name: Install dependencies
