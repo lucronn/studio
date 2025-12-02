@@ -220,6 +220,25 @@ export async function getSuccessfulPayloadsFromFirestore(limitCount: number = 10
   }
 }
 
+export async function getSuccessfulPayloadsWithMetadata(limitCount: number = 50): Promise<SuccessfulPayload[]> {
+  try {
+    const q = query(
+      collection(db, 'SuccessfulPayloads'),
+      orderBy('createdAt', 'desc'),
+      limit(limitCount)
+    );
+
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as SuccessfulPayload[];
+  } catch (error) {
+    console.error('Error getting successful payloads with metadata:', error);
+    return [];
+  }
+}
+
 // Analytics and Reporting
 export async function getOperationStats(): Promise<{
   total: number;
